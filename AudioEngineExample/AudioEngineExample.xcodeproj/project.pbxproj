@@ -41,6 +41,7 @@
 		294F15371F27C3A900EF43C1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		294F153A1F27C5DE00EF43C1 /* AmAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmAudioEngine.h; path = ../AmAudioEngine.h; sourceTree = "<group>"; };
 		294F153B1F27C5DE00EF43C1 /* AmAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AmAudioEngine.mm; path = ../AmAudioEngine.mm; sourceTree = "<group>"; };
+		294F153D1F27EBF000EF43C1 /* AudioEngineExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AudioEngineExample.entitlements; sourceTree = "<group>"; };
 		9178D72D0F08A781BE5BC60D /* libPods-AudioEngineExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AudioEngineExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9F00EBE8E6195F3F6C8EB1D /* Pods-AudioEngineExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioEngineExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudioEngineExample/Pods-AudioEngineExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +87,7 @@
 		294F15161F27B76900EF43C1 /* AudioEngineExample */ = {
 			isa = PBXGroup;
 			children = (
+				294F153D1F27EBF000EF43C1 /* AudioEngineExample.entitlements */,
 				294F151A1F27B76900EF43C1 /* AppDelegate.h */,
 				294F151B1F27B76900EF43C1 /* AppDelegate.m */,
 				294F151D1F27B76900EF43C1 /* ViewController.h */,
@@ -163,6 +165,14 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = J6F2XLS3BY;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InterAppAudio = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -377,6 +387,7 @@
 			baseConfigurationReference = 15E1913BC73727CA7FE3E4A6 /* Pods-AudioEngineExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AudioEngineExample/AudioEngineExample.entitlements;
 				DEVELOPMENT_TEAM = J6F2XLS3BY;
 				INFOPLIST_FILE = AudioEngineExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -390,6 +401,7 @@
 			baseConfigurationReference = D9F00EBE8E6195F3F6C8EB1D /* Pods-AudioEngineExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AudioEngineExample/AudioEngineExample.entitlements;
 				DEVELOPMENT_TEAM = J6F2XLS3BY;
 				INFOPLIST_FILE = AudioEngineExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -417,6 +429,7 @@
 				294F152D1F27B76900EF43C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
