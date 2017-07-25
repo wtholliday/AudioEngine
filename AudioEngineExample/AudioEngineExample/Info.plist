@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>manufacturer</key>
-			<string>ADLS</string>
+			<string>AUEE</string>
 			<key>name</key>
 			<string>Audio Engine Example Instrument</string>
 			<key>subtype</key>
@@ -18,7 +18,7 @@
 		</dict>
 		<dict>
 			<key>manufacturer</key>
-			<string>ADLS</string>
+			<string>AUEE</string>
 			<key>name</key>
 			<string>Audio Engine Example Effect</string>
 			<key>subtype</key>
