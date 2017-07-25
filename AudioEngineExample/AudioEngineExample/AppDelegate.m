@@ -106,6 +106,25 @@ static NSString* kAudiobusAPIKey =
     };
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath
+                     ofObject:(id)object
+                       change:(NSDictionary *)change
+                      context:(void *)context {
+    
+    if ( context == kAudiobusConnectedOrActiveMemberChanged ) {
+        if ( [UIApplication sharedApplication].applicationState == UIApplicationStateBackground
+            && !_audiobusController.connected
+            && !_audiobusController.memberOfActiveAudiobusSession ) {
+            
+            // Pause audio processing.
+            [[AmAudioEngine sharedEngine] pause];
+            
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+    
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
