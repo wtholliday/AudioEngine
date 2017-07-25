@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AmAudioEngine.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate ()
 
@@ -24,6 +25,33 @@
     [[AmAudioEngine sharedEngine] initAudio];
     
     return YES;
+}
+
+- (void)initAudioSession
+{
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    assert(session);
+    
+    NSError* error = nil;
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:(AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP) error:&error];
+    
+    if(error) {
+        NSLog(@"Error setting audio session category: %@", error.localizedDescription);
+    }
+    
+    [session setPreferredIOBufferDuration:.005 error:&error];
+    
+    if(error) {
+        NSLog(@"Error setting preferred IO buffer duration: %@", error.localizedDescription);
+    }
+    
+    [session setActive:YES error:&error];
+    
+    if(error) {
+        NSLog(@"Error activating the audio session: %@", error.localizedDescription);
+    }
+    
+    NSLog(@"Sample Rate: %0.0fHz I/O Buffer Duration:%f", session.sampleRate, session.IOBufferDuration);
 }
 
 
