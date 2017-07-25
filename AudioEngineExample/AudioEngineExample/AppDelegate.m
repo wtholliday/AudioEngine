@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AmAudioEngine.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [AmAudioEngine registerAudioUnit];
+    
+    [[AmAudioEngine sharedEngine] initAudio];
+    
     return YES;
 }
 
