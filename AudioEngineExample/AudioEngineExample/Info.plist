@@ -2,8 +2,37 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AudioComponents</key>
+	<array>
+		<dict>
+			<key>manufacturer</key>
+			<string>ADLS</string>
+			<key>name</key>
+			<string>Audio Engine Example Instrument</string>
+			<key>subtype</key>
+			<string>aout</string>
+			<key>type</key>
+			<string>auri</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>manufacturer</key>
+			<string>ADLS</string>
+			<key>name</key>
+			<string>Audio Engine Example Effect</string>
+			<key>subtype</key>
+			<string>afil</string>
+			<key>type</key>
+			<string>aurx</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>AudioEngineExample</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
