@@ -13,6 +13,10 @@
 		294F15221F27B76900EF43C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 294F15201F27B76900EF43C1 /* Main.storyboard */; };
 		294F15241F27B76900EF43C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 294F15231F27B76900EF43C1 /* Assets.xcassets */; };
 		294F15271F27B76900EF43C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 294F15251F27B76900EF43C1 /* LaunchScreen.storyboard */; };
+		294F15311F27B9F700EF43C1 /* AmAudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 294F152F1F27B9F700EF43C1 /* AmAudioUnit.mm */; };
+		294F15361F27C39D00EF43C1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294F15351F27C39D00EF43C1 /* AudioToolbox.framework */; };
+		294F15381F27C3A900EF43C1 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294F15371F27C3A900EF43C1 /* CoreAudio.framework */; };
+		294F15391F27C3C200EF43C1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294F15331F27C37700EF43C1 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,12 @@
 		294F15231F27B76900EF43C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		294F15261F27B76900EF43C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		294F15281F27B76900EF43C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		294F152E1F27B9F700EF43C1 /* AmAudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmAudioUnit.h; path = ../AmAudioUnit.h; sourceTree = "<group>"; };
+		294F152F1F27B9F700EF43C1 /* AmAudioUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AmAudioUnit.mm; path = ../AmAudioUnit.mm; sourceTree = "<group>"; };
+		294F15301F27B9F700EF43C1 /* BufferedAudioBus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BufferedAudioBus.hpp; path = ../BufferedAudioBus.hpp; sourceTree = "<group>"; };
+		294F15331F27C37700EF43C1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		294F15351F27C39D00EF43C1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		294F15371F27C3A900EF43C1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +43,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294F15391F27C3C200EF43C1 /* AVFoundation.framework in Frameworks */,
+				294F15381F27C3A900EF43C1 /* CoreAudio.framework in Frameworks */,
+				294F15361F27C39D00EF43C1 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,8 +55,12 @@
 		294F150B1F27B76900EF43C1 = {
 			isa = PBXGroup;
 			children = (
+				294F152E1F27B9F700EF43C1 /* AmAudioUnit.h */,
+				294F152F1F27B9F700EF43C1 /* AmAudioUnit.mm */,
+				294F15301F27B9F700EF43C1 /* BufferedAudioBus.hpp */,
 				294F15161F27B76900EF43C1 /* AudioEngineExample */,
 				294F15151F27B76900EF43C1 /* Products */,
+				294F15321F27C37700EF43C1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +94,16 @@
 				294F15181F27B76900EF43C1 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		294F15321F27C37700EF43C1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				294F15371F27C3A900EF43C1 /* CoreAudio.framework */,
+				294F15351F27C39D00EF43C1 /* AudioToolbox.framework */,
+				294F15331F27C37700EF43C1 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +180,7 @@
 			files = (
 				294F151F1F27B76900EF43C1 /* ViewController.m in Sources */,
 				294F151C1F27B76900EF43C1 /* AppDelegate.m in Sources */,
+				294F15311F27B9F700EF43C1 /* AmAudioUnit.mm in Sources */,
 				294F15191F27B76900EF43C1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
