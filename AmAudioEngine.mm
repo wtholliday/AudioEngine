@@ -59,6 +59,12 @@ static AudioComponentDescription getComponentDescription()
                                                  name:AVAudioEngineConfigurationChangeNotification
                                                object:self.audioEngine];
     
+    //If media services get reset republish output node
+    [[NSNotificationCenter defaultCenter] addObserverForName:AVAudioSessionMediaServicesWereResetNotification object: nil queue: nil usingBlock: ^(NSNotification *note) {
+        
+        NSLog(@"AVAudioSessionMediaServicesWereResetNotification");
+    }];
+    
 #if TARGET_OS_OSX
     UInt32 frameSize = 256;
     AudioUnitSetProperty(self.audioEngine.inputNode.audioUnit,
@@ -96,6 +102,8 @@ static AudioComponentDescription getComponentDescription()
     if(error) {
         NSLog(@"Error starting audio engine: %@", error);
     }
+    
+    [self publishOutputAudioUnit];
     
 }
 
@@ -138,6 +146,8 @@ static AudioComponentDescription getComponentDescription()
         NSLog(@"Error starting audio engine: %@", error);
     }
     
+    [self publishOutputAudioUnit];
+    
 }
 
 - (AudioUnit) audioUnit
@@ -158,6 +168,73 @@ static AudioComponentDescription getComponentDescription()
 - (void) pause
 {
     [self.audioEngine pause];
+}
+
+void AudioUnitPropertyChangeDispatcher(void *inRefCon, AudioUnit inUnit, AudioUnitPropertyID inID, AudioUnitScope inScope, AudioUnitElement inElement) {
+    AmAudioEngine *SELF = (__bridge AmAudioEngine *)inRefCon;
+    [SELF audioUnitPropertyChangedListener:inRefCon unit:inUnit propID:inID scope:inScope element:inElement];
+}
+
+- (void) publishOutputAudioUnit
+{
+    AudioUnitAddPropertyListener(self.audioUnit,
+                                 kAudioUnitProperty_IsInterAppConnected,
+                                 AudioUnitPropertyChangeDispatcher,
+                                 (__bridge void*)self);
+    
+    AudioComponentDescription desc = { kAudioUnitType_RemoteEffect, 'afil', 'AUEE', 0, 0 };
+    OSStatus err = AudioOutputUnitPublish(&desc, CFSTR("Audio Engine Example Effect"), 0, self.audioUnit);
+    
+    if(err != noErr)
+    {
+        NSLog(@"Error publishing IAA audio unit");
+    }
+}
+
+- (void) setAudioSessionActive {
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    
+    NSError* err = nil;
+    [session setActive: YES error:&err];
+    
+    if(err)
+    {
+        NSLog(@"error activating audio session: %@", err);
+    }
+}
+
+- (void) audioUnitPropertyChangedListener:(void *) inObject unit:(AudioUnit) inUnit propID:(AudioUnitPropertyID) inID scope:(AudioUnitScope) inScope element:(AudioUnitElement) inElement {
+    
+    if (inID == kAudioUnitProperty_IsInterAppConnected)
+    {
+        NSLog(@"kAudioUnitProperty_IsInterAppConnected changed");
+        
+        UInt32 connected;
+        UInt32 dataSize = sizeof(UInt32);
+        AudioUnitGetProperty(self.audioUnit,
+                             kAudioUnitProperty_IsInterAppConnected,
+                             kAudioUnitScope_Global, 0,
+                             &connected,
+                             &dataSize);
+        
+        NSLog(@"connected: %d", connected);
+        
+        [self setAudioSessionActive];
+        
+        [self.audioEngine stop];
+        
+        [self makeAudioConnections];
+        
+        [self.audioEngine prepare];
+        
+        NSError* error;
+        [self.audioEngine startAndReturnError:&error];
+        
+        if(error) {
+            NSLog(@"Error starting audio engine: %@", error);
+        }
+        
+    }
 }
 
 @end

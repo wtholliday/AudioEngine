@@ -18,7 +18,6 @@
 		294F15381F27C3A900EF43C1 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294F15371F27C3A900EF43C1 /* CoreAudio.framework */; };
 		294F15391F27C3C200EF43C1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294F15331F27C37700EF43C1 /* AVFoundation.framework */; };
 		294F153C1F27C5DE00EF43C1 /* AmAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 294F153B1F27C5DE00EF43C1 /* AmAudioEngine.mm */; };
-		2C72A23E5CAAF13C186FAF52 /* libPods-AudioEngineExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9178D72D0F08A781BE5BC60D /* libPods-AudioEngineExample.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +53,6 @@
 				294F15391F27C3C200EF43C1 /* AVFoundation.framework in Frameworks */,
 				294F15381F27C3A900EF43C1 /* CoreAudio.framework in Frameworks */,
 				294F15361F27C39D00EF43C1 /* AudioToolbox.framework in Frameworks */,
-				2C72A23E5CAAF13C186FAF52 /* libPods-AudioEngineExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,12 +134,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 294F152B1F27B76900EF43C1 /* Build configuration list for PBXNativeTarget "AudioEngineExample" */;
 			buildPhases = (
-				76C46F962B926428A783AF69 /* [CP] Check Pods Manifest.lock */,
 				294F15101F27B76900EF43C1 /* Sources */,
 				294F15111F27B76900EF43C1 /* Frameworks */,
 				294F15121F27B76900EF43C1 /* Resources */,
-				83360D1BDD77BC4EEC796AB9 /* [CP] Embed Pods Frameworks */,
-				9C7EF5756E965F6F79981BC3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -206,54 +201,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		76C46F962B926428A783AF69 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		83360D1BDD77BC4EEC796AB9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudioEngineExample/Pods-AudioEngineExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9C7EF5756E965F6F79981BC3 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudioEngineExample/Pods-AudioEngineExample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		294F15101F27B76900EF43C1 /* Sources */ = {

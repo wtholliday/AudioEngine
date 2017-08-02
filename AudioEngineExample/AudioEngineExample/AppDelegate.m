@@ -9,18 +9,8 @@
 #import "AppDelegate.h"
 #import "AmAudioEngine.h"
 #import <AVFoundation/AVFoundation.h>
-#import <Audiobus/Audiobus.h>
-
-static void * kAudiobusConnectedOrActiveMemberChanged = &kAudiobusConnectedOrActiveMemberChanged;
-
-static NSString* kAudiobusAPIKey =
-@"H4sIAAAAAAAAA42QwW6DMBBEfwX5TGIgQaq49eBDP6CnuooMLKlVbKy1twJF+ffYSVtxqcp19u3M7F4YzE7jwhpW1kVVHaqn8shy1pLtRzhZZSCOnqnXk7BnbUHMyrgRIkI4nnz3AX8Qu3Jf7FWSW/KN5JLHHTdh8Kx5u7CwuLSnCHXU1znZwyb79slerA9IBmyIYA++Q+2Cnuwm3lP7kzRREoyyNKguEAImh1chovoF6O+Wh2u+7jb/000MA3Qbe/2yq06DHrd0es+Z7uNE8gAm/lDhskM463ioSpGSf8IieVXXBbveAOqTVu3TAQAA:N1Tb7GEm0QNOpqWbgDZ5yOtm9QOgyGvdBT5NjjiU/sphnIxHY+F2wUSC7CzvjB1HpiQKPt5f/8GYtBAhUKBJGJw58sAaSiqH2Gmhli+jiDX6/kCJ0TMmsHtapaSLMrD3";
 
 @interface AppDelegate ()
-
-@property (strong, nonatomic) ABAudiobusController *audiobusController;
-@property (strong, nonatomic) ABAudioSenderPort *senderPort;
-@property (strong, nonatomic) ABAudioFilterPort *filterPort;
 
 @end
 
@@ -68,61 +58,6 @@ static NSString* kAudiobusAPIKey =
     
     AmAudioEngine* engine = [AmAudioEngine sharedEngine];
     [engine initAudio];
-    
-    self.audiobusController = [[ABAudiobusController alloc] initWithApiKey:kAudiobusAPIKey];
-    
-    // Watch the connected and memberOfActiveAudiobusSession properties
-    [_audiobusController addObserver:self
-                          forKeyPath:@"connected"
-                             options:0
-                             context:kAudiobusConnectedOrActiveMemberChanged];
-    [_audiobusController addObserver:self
-                          forKeyPath:@"memberOfActiveAudiobusSession"
-                             options:0
-                             context:kAudiobusConnectedOrActiveMemberChanged];
-    
-    self.senderPort = [[ABAudioSenderPort alloc] initWithName:@"Audio Engine Example Instrument"
-                                                        title:@"Audio Engine Example Instrument"
-                                    audioComponentDescription:(AudioComponentDescription) {
-                                        .componentType = kAudioUnitType_RemoteInstrument,
-                                        .componentSubType = 'aout', // Note single quotes
-                                        .componentManufacturer = 'AUEE' }
-                                                    audioUnit:engine.audioUnit];
-    
-    [self.audiobusController addAudioSenderPort:self.senderPort];
-    
-    self.filterPort = [[ABAudioFilterPort alloc] initWithName:@"Audio Engine Example Effect"
-                                                        title:@"Audio Engine Example Effect"
-                                    audioComponentDescription:(AudioComponentDescription) {
-                                        .componentType = kAudioUnitType_RemoteEffect,
-                                        .componentSubType = 'afil',
-                                        .componentManufacturer = 'AUEE' }
-                                                    audioUnit:engine.audioUnit];
-    
-    [_audiobusController addAudioFilterPort:self.filterPort];
-    
-    self.audiobusController.enableReceivingCoreMIDIBlock = ^(BOOL receivingEnabled) {
-        NSLog(@"receiving enabled: %d", receivingEnabled);        
-    };
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath
-                     ofObject:(id)object
-                       change:(NSDictionary *)change
-                      context:(void *)context {
-    
-    if ( context == kAudiobusConnectedOrActiveMemberChanged ) {
-        if ( [UIApplication sharedApplication].applicationState == UIApplicationStateBackground
-            && !_audiobusController.connected
-            && !_audiobusController.memberOfActiveAudiobusSession ) {
-            
-            // Pause audio processing.
-            [[AmAudioEngine sharedEngine] pause];
-            
-        }
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
     
 }
 
