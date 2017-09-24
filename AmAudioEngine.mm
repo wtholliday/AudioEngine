@@ -175,6 +175,14 @@ void AudioUnitPropertyChangeDispatcher(void *inRefCon, AudioUnit inUnit, AudioUn
     [SELF audioUnitPropertyChangedListener:inRefCon unit:inUnit propID:inID scope:inScope element:inElement];
 }
 
+static OSType FourCC(NSString* str)
+{
+    return ([str characterAtIndex:0]) << 24
+         | ([str characterAtIndex:1]) << 16
+         | ([str characterAtIndex:2]) << 8
+         | [str characterAtIndex:3];
+}
+
 - (void) publishOutputAudioUnit
 {
     AudioUnitAddPropertyListener(self.audioUnit,
@@ -182,13 +190,34 @@ void AudioUnitPropertyChangeDispatcher(void *inRefCon, AudioUnit inUnit, AudioUn
                                  AudioUnitPropertyChangeDispatcher,
                                  (__bridge void*)self);
     
-    AudioComponentDescription desc = { kAudioUnitType_RemoteEffect, 'afil', 'AUEE', 0, 0 };
-    OSStatus err = AudioOutputUnitPublish(&desc, CFSTR("Audio Engine Example Effect"), 0, self.audioUnit);
+    auto path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:path];
     
-    if(err != noErr)
-    {
-        NSLog(@"Error publishing IAA audio unit");
+    auto comps = (NSArray*) dict[@"AudioComponents"];
+    for(NSDictionary* component in comps) {
+        NSString* type = (NSString*) component[@"type"];
+        NSString* subtype = (NSString*) component[@"subtype"];
+        NSString* name = (NSString*) component[@"name"];
+        NSString* manufacturer = (NSString*) component[@"manufacturer"];
+        
+        NSLog(@"%@ %@ %@ %@", type, subtype, name, manufacturer);
+        AudioComponentDescription desc;
+        desc.componentType = FourCC(type);
+        desc.componentSubType = FourCC(subtype);
+        desc.componentManufacturer = FourCC(manufacturer);
+        desc.componentFlags = 0;
+        desc.componentFlagsMask = 0;
+        
+        assert(desc.componentType == kAudioUnitType_RemoteEffect or desc.componentType == kAudioUnitType_RemoteInstrument);
+        
+        OSStatus err = AudioOutputUnitPublish(&desc, (__bridge CFStringRef) name, 0, self.audioUnit);
+        
+        if(err != noErr)
+        {
+            NSLog(@"Error publishing IAA audio unit: %d", err);
+        }
     }
+    
 }
 
 - (void) setAudioSessionActive {
