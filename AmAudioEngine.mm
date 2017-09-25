@@ -185,10 +185,12 @@ static OSType FourCC(NSString* str)
 
 - (void) publishOutputAudioUnit
 {
+    /*
     AudioUnitAddPropertyListener(self.audioUnit,
                                  kAudioUnitProperty_IsInterAppConnected,
                                  AudioUnitPropertyChangeDispatcher,
                                  (__bridge void*)self);
+    */
     
     auto path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:path];
@@ -210,7 +212,7 @@ static OSType FourCC(NSString* str)
         
         assert(desc.componentType == kAudioUnitType_RemoteEffect or desc.componentType == kAudioUnitType_RemoteInstrument);
         
-        OSStatus err = AudioOutputUnitPublish(&desc, (__bridge CFStringRef) name, 0, self.audioUnit);
+        OSStatus err = AudioOutputUnitPublish(&desc, (__bridge CFStringRef) name, 0, self.audioEngine.outputNode.audioUnit);
         
         if(err != noErr)
         {
